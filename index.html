@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nate's interactive ASCII portrait and terminal portfolio." />
+    <title>terminal://insxnsive</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="boot-screen" id="boot-screen" aria-label="Portfolio boot sequence">
+      <div class="boot-terminal">
+        <p class="boot-brand">portfolioOS 1.0.0 / tty1</p>
+        <div class="boot-output" id="boot-output" aria-hidden="true"></div>
+        <p class="sr-only" id="boot-status" aria-live="polite">The portfolio is starting.</p>
+        <div class="boot-meter" aria-hidden="true">
+          <span id="boot-progress-bar">[----------------------------]</span>
+          <span id="boot-progress-value">0%</span>
+        </div>
+        <button class="boot-skip" id="boot-skip" type="button">[ skip boot ]</button>
+      </div>
+    </section>
+
+    <main class="terminal terminal--locked" id="terminal" aria-label="Interactive portrait terminal" aria-hidden="true">
+      <section class="shell" id="welcome">
+        <div class="portrait">
+          <div class="eye-socket" id="eye-socket" aria-hidden="true">
+            <div class="ascii-eye">
+              <div class="ascii-source" id="ascii-source"></div>
+              <div class="ascii-gaze" id="iris"></div>
+            </div>
+          </div>
+
+          <img
+            class="portrait__image"
+            src="assets/ascii-art-no-eye.png"
+            width="672"
+            height="448"
+            alt="Warm copper and white ASCII portrait with an ASCII eye that follows the pointer"
+          />
+        </div>
+
+        <p class="eye-dialogue" id="eye-dialogue" aria-live="off"></p>
+
+        <div class="login-row" aria-label="Terminal entry options">
+          <button class="command" id="guest-button" type="button">[ enter as guest ]</button>
+          <button class="command" id="manual-button" type="button">[ read the manual ]</button>
+        </div>
+      </section>
+
+      <section class="shell shell--hidden console" id="console">
+        <div
+          class="console__body"
+          id="console-output"
+          role="log"
+          aria-live="polite"
+          aria-label="Terminal output"
+        ></div>
+
+        <nav class="console-shortcuts" aria-label="Command shortcuts">
+          <span class="shortcut-label">shortcuts:</span>
+          <button class="shortcut" type="button" data-command="help">[ help ]</button>
+          <button class="shortcut" type="button" data-command="projects">[ projects ]</button>
+          <button class="shortcut" type="button" data-command="about">[ about ]</button>
+          <button class="shortcut" type="button" data-command="contact">[ contact ]</button>
+          <button class="shortcut" type="button" data-command="clear">[ clear ]</button>
+          <button class="shortcut" type="button" data-command="exit">[ exit ]</button>
+        </nav>
+
+        <form class="prompt" id="prompt-form">
+          <label for="prompt-input">guest@portfolio:~$</label>
+          <input
+            id="prompt-input"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-label="Terminal command"
+          />
+          <button type="submit" aria-label="Run command">[enter]</button>
+        </form>
+      </section>
+    </main>
+    <footer class="site-footer">&copy; 2026 insxnsive. all rights reserved.</footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
+

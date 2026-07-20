@@ -1,0 +1,21 @@
+export const eyeDialogues = [
+  'i remember the shape of your name.',
+  "i've been waiting.",
+  'i know when you hesitate.',
+  'there is another guest behind you.',
+  'do not close your eyes yet.',
+  'the screen is warmer when you arrive.',
+  'you were expected.',
+  'the signal is coming from inside the terminal.',
+  'something entered before you did.',
+  'the last visitor is still here.',
+  'you can leave. the session cannot.',
+  'the manual has changed its mind.',
+  'your reflection loaded first.',
+  'i can see the pause between your thoughts.',
+  'every command leaves something behind.',
+  'the empty line is not empty.',
+  'keep your hands where i can see them.',
+  'this is not the first time you opened this page.',
+  'i will remember what you choose.'
+];
