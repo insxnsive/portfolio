@@ -1,6 +1,6 @@
 import { responses } from '../data/terminal.js';
 
-export function createTerminalController({ dom, gaze, motionQuery }) {
+export function createTerminalController({ dom, gaze, motionQuery, touchQuery }) {
   const { consolePanel, guestButton, input, output, promptForm, shortcutButtons, welcome } = dom;
   let shortcutTimer = null;
   let shortcutToken = 0;
@@ -74,7 +74,7 @@ export function createTerminalController({ dom, gaze, motionQuery }) {
     input.value = '';
     input.readOnly = true;
     setShortcutsDisabled(true);
-    input.focus();
+    if (!touchQuery.matches) input.focus();
     const submit = () => {
       if (token !== shortcutToken) return;
       output.replaceChildren();
@@ -108,7 +108,7 @@ export function createTerminalController({ dom, gaze, motionQuery }) {
     gaze.stopGaze();
     if (mode === 'manual') appendResponse(responses.help);
     else appendLine("session opened. use a shortcut or type 'help'.", 'muted');
-    requestAnimationFrame(() => input.focus());
+    if (!touchQuery.matches) requestAnimationFrame(() => input.focus());
   }
 
   function leaveConsole() {

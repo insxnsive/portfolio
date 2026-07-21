@@ -6,7 +6,8 @@ export function createGazeController({ eyeSocket, iris, motionQuery }) {
     targetY: 0,
     pointerX: window.innerWidth / 2,
     pointerY: window.innerHeight / 2,
-    frame: null
+    frame: null,
+    idleTimer: null
   };
 
   function clamp(value, minimum, maximum) { return Math.min(maximum, Math.max(minimum, value)); }
@@ -41,6 +42,25 @@ export function createGazeController({ eyeSocket, iris, motionQuery }) {
     if (gaze.frame === null) gaze.frame = requestAnimationFrame(animateGaze);
   }
 
+  function scheduleIdleGaze() {
+    clearTimeout(gaze.idleTimer);
+    if (motionQuery.matches) return;
+    gaze.idleTimer = window.setTimeout(() => {
+      const rect = eyeSocket.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const angle = Math.random() * Math.PI * 2;
+      const radius = .35 + Math.random() * .65;
+      gaze.targetX = Math.cos(angle) * rect.width * .16 * radius;
+      gaze.targetY = Math.sin(angle) * rect.height * .07 * radius;
+      scheduleGaze();
+      scheduleIdleGaze();
+    }, 3000);
+  }
+
+  function startIdleGaze() {
+    scheduleIdleGaze();
+  }
+
   function updateGazeTarget(clientX, clientY) {
     gaze.pointerX = clientX;
     gaze.pointerY = clientY;
@@ -64,14 +84,17 @@ export function createGazeController({ eyeSocket, iris, motionQuery }) {
     gaze.targetX = nextX;
     gaze.targetY = nextY;
     scheduleGaze();
+    scheduleIdleGaze();
   }
 
   function stopGaze() {
+    clearTimeout(gaze.idleTimer);
+    gaze.idleTimer = null;
     if (gaze.frame !== null) {
       cancelAnimationFrame(gaze.frame);
       gaze.frame = null;
     }
   }
 
-  return { applyGaze, scheduleGaze, stopGaze, updateGazeTarget, gaze };
+  return { applyGaze, scheduleGaze, startIdleGaze, stopGaze, updateGazeTarget, gaze };
 }

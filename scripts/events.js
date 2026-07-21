@@ -7,6 +7,7 @@ export function bindEvents({ dom, motionQuery, dialogue, gaze, terminal, boot })
 
   function handleMotionPreference() {
     gaze.scheduleGaze();
+    gaze.startIdleGaze();
     dialogue.scheduleDialogue();
   }
 

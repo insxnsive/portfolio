@@ -515,3 +515,9 @@ button {
   }
 }
 
+
+@media (hover: none) and (pointer: coarse) {
+  .prompt {
+    display: none;
+  }
+}

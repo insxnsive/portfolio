@@ -21,3 +21,4 @@ export const dom = {
 };
 
 export const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+export const touchQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
