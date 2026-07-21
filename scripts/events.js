@@ -1,5 +1,5 @@
 export function bindEvents({ dom, motionQuery, dialogue, gaze, terminal, boot }) {
-  const { bootSkip, guestButton, manualButton, output, promptForm, input, shortcutButtons } = dom;
+  const { bootSkip, guestButton, manualButton, promptForm, input, shortcutButtons } = dom;
 
   bootSkip.addEventListener('click', () => boot.finishBoot(true));
   window.addEventListener('pointermove', event => gaze.updateGazeTarget(event.clientX, event.clientY), { passive: true });
@@ -19,7 +19,6 @@ export function bindEvents({ dom, motionQuery, dialogue, gaze, terminal, boot })
   guestButton.addEventListener('blur', dialogue.resumeDialogueCycle);
   guestButton.addEventListener('click', () => terminal.enterConsole('guest'));
   manualButton.addEventListener('click', () => terminal.enterConsole('manual'));
-  output.addEventListener('pointerdown', () => input.focus());
   shortcutButtons.forEach(button => button.addEventListener('click', () => terminal.runShortcut(button.dataset.command)));
   promptForm.addEventListener('submit', event => {
     event.preventDefault();
