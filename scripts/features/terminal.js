@@ -4,6 +4,29 @@ export function createTerminalController({ dom, gaze, motionQuery }) {
   const { consolePanel, guestButton, input, output, promptForm, shortcutButtons, welcome } = dom;
   let shortcutTimer = null;
   let shortcutToken = 0;
+  const defaultShortcuts = shortcutButtons.map(button => ({ command: button.dataset.command, text: button.textContent }));
+
+  function setProjectShortcuts(active) {
+    if (active) {
+      const projectCommands = ['projects 01', 'projects 02', 'projects 03'];
+      shortcutButtons.forEach((button, index) => {
+        if (index < projectCommands.length) {
+          button.hidden = false;
+          button.dataset.command = projectCommands[index];
+          button.textContent = '[ ' + String(index + 1).padStart(2, '0') + ' ]';
+        } else {
+          button.hidden = true;
+        }
+      });
+      return;
+    }
+
+    shortcutButtons.forEach((button, index) => {
+      button.hidden = false;
+      button.dataset.command = defaultShortcuts[index].command;
+      button.textContent = defaultShortcuts[index].text;
+    });
+  }
 
   function createTerminalLink(entry) {
     const link = document.createElement('a');
@@ -111,6 +134,9 @@ export function createTerminalController({ dom, gaze, motionQuery }) {
       leaveConsole();
       return;
     }
+    if (command === 'projects') setProjectShortcuts(true);
+    else setProjectShortcuts(false);
+
     if (responses[command]) appendResponse(responses[command]);
     else {
       appendLine(`command not found: ${command}`);

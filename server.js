@@ -14,5 +14,5 @@ http.createServer((req, res) => {
   }
   res.writeHead(200, { 'Content-Type': (types[path.extname(file)] || 'application/octet-stream') + '; charset=utf-8' });
   fs.createReadStream(file).pipe(res);
-}).listen(process.env.PORT || 4173, () => console.log('http://localhost:4173'));
+}).listen(process.env.PORT || 8080, () => console.log('http://localhost:4173'));
 
